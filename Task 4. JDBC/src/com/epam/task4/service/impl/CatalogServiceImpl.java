@@ -26,7 +26,7 @@ public class CatalogServiceImpl implements CatalogService {
 	@Override
 	public void addNews(Request request) throws ServiceException {
 		if (request == null || request.getTitle() == null || request.getCategory() == null || request.getContent() == null) {
-			throw new ServiceException("Incorrect news initialization");
+			throw new ServiceException("Incorrect request initialization");
 		}
 
 		try {
@@ -40,8 +40,8 @@ public class CatalogServiceImpl implements CatalogService {
 
 	@Override
 	public HashSet<News> findByTitle(Request request) throws ServiceException {
-		if (request == null || request.getTitle() == null) {
-			throw new ServiceException("Incorrect title initialization");
+		if (request == null) {
+			throw new ServiceException("Incorrect request initialization");
 		}
 		
 		HashSet<News> result = new HashSet<>();
@@ -57,8 +57,8 @@ public class CatalogServiceImpl implements CatalogService {
 
 	@Override
 	public HashSet<News> findByCategory(Request request) throws ServiceException {
-		if (request == null || request.getCategory() == null) {
-			throw new ServiceException("Incorrect category initialization");
+		if (request == null) {
+			throw new ServiceException("Incorrect request initialization");
 		}
 		HashSet<News> result = new HashSet<>();
 		try {

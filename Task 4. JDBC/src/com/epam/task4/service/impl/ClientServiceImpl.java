@@ -23,7 +23,7 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public void registration(Request request) throws ServiceException {
 		if (request == null || request.getLogin() == null || request.getPassword() == null) {
-			throw new ServiceException("Incorrect user initialization");
+			throw new ServiceException("Incorrect request initialization");
 		}
 
 		try {
@@ -38,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public boolean signIn(Request request) throws ServiceException {
 		if (request == null || request.getLogin() == null || request.getPassword() == null) {
-			throw new ServiceException("Incorrect user initialization");
+			throw new ServiceException("Incorrect request initialization");
 		}
 
 		boolean result = false;
@@ -54,8 +54,8 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public boolean signOut(Request request) throws ServiceException {
-		if (request == null || request.getLogin() == null) {
-			throw new ServiceException("Incorrect login initialization");
+		if (request == null) {
+			throw new ServiceException("Incorrect request initialization");
 		}
 
 		boolean result = false;
