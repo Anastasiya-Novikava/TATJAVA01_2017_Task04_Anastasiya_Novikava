@@ -42,24 +42,31 @@ public final class Controller {
 	private void setParametersRequest(Request request, String[] arrayParametersRequest) {
 		CommandName commandName = request.getCommandName();
 
-		if (commandName.equals(CommandName.REGISTRATION)) {
+		switch(commandName){
+		case REGISTRATION:
 			request.setLogin(arrayParametersRequest[0]);
 			request.setPassword(arrayParametersRequest[1]);
-		} else if (commandName.equals(CommandName.SIGN_IN)) {
+			break;
+		case SIGN_IN:
 			request.setLogin(arrayParametersRequest[0]);
 			request.setPassword(arrayParametersRequest[1]);
-		} else if (commandName.equals(CommandName.SIGN_OUT)) {
+			break;
+		case SIGN_OUT:
 			request.setLogin(arrayParametersRequest[0]);
-		} else if (commandName.equals(CommandName.ADD_NEWS)) {
+			break;
+		case ADD_NEWS:
 			request.setTitle(arrayParametersRequest[0]);
-			Category category = Category.valueOf(arrayParametersRequest[1].toUpperCase());
-			request.setCategory(category);
+			request.setCategory(Category.valueOf(arrayParametersRequest[1].toUpperCase()));
 			request.setContent(arrayParametersRequest[2]);
-		} else if (commandName.equals(CommandName.FIND_BY_CATEGORY)) {
-			Category category = Category.valueOf(arrayParametersRequest[0].toUpperCase());
-			request.setCategory(category);
-		} else if (commandName.equals(CommandName.FIND_BY_TITLE)) {
+			break;
+		case FIND_BY_CATEGORY:
+			request.setCategory(Category.valueOf(arrayParametersRequest[0].toUpperCase()));
+			break;
+		case FIND_BY_TITLE:
 			request.setTitle(arrayParametersRequest[0]);
+			break;
+		case WRONG_REQUEST:
+			break;
 		}
 	}
 }

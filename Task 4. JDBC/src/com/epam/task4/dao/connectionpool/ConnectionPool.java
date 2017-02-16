@@ -17,7 +17,6 @@ import java.sql.SQLXML;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.sql.Struct;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -38,7 +37,6 @@ public final class ConnectionPool {
     
     private ConnectionPool() {
         DBResourceManager dbResourseManager = DBResourceManager.getInstance();
-
         this.driverName = dbResourseManager.getValue(DBParameter.DB_DRIVER);
         this.url = dbResourseManager.getValue(DBParameter.DB_URL);
         this.user = dbResourseManager.getValue(DBParameter.DB_USER);
@@ -60,7 +58,6 @@ public final class ConnectionPool {
     }
     
     public void initPoolData() throws ConnectionPoolException {
-        Locale.setDefault(Locale.ENGLISH);
         try {
             Class.forName(driverName);
             givenAwayConQueue = new ArrayBlockingQueue<Connection>(poolSize);
@@ -86,7 +83,7 @@ public final class ConnectionPool {
             closeConnectionsQueue(givenAwayConQueue);
             closeConnectionsQueue(connectionQueue);
         } catch (SQLException e) {
-        // logger.log(Level.ERROR, "Error closing the connection.", e);
+        	e.printStackTrace();
         }
     }
 
@@ -106,17 +103,17 @@ public final class ConnectionPool {
         try {
             con.close();
         } catch (SQLException e) {
-        // logger.log(Level.ERROR, "Connection isn't return to the pool.");
+        	e.printStackTrace();
         }
         try {
             rs.close();
         } catch (SQLException e) {
-        // logger.log(Level.ERROR, "ResultSet isn't closed.");
+        	e.printStackTrace();
         }
         try {
             st.close();
         } catch (SQLException e) {
-        // logger.log(Level.ERROR, "Statement isn't closed.");
+        	e.printStackTrace();
         }
     }
 
@@ -124,12 +121,12 @@ public final class ConnectionPool {
         try {
             con.close();
         } catch (SQLException e) {
-        // logger.log(Level.ERROR, "Connection isn't return to the pool.");
+        	e.printStackTrace();
         }
         try {
             st.close();
         } catch (SQLException e) {
-        // logger.log(Level.ERROR, "Statement isn't closed.");
+        	e.printStackTrace();
         }
     }
 

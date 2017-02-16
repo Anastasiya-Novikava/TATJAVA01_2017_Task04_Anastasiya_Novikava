@@ -17,11 +17,9 @@ import com.epam.task4.dao.exception.DAOException;
 public class SqlNewsDAO implements NewsDAO {
 	private ConnectionPool pool = ConnectionPool.getInstance();
 
-	private final String nameDB = "news";
-
-	private final String INSERT_QUERY = "INSERT INTO " + nameDB + " (title, category, content) VALUES (?, ?, ?)";
-	private final String SELECT_TITLE_QUERY = "SELECT * FROM " + nameDB + " WHERE title = ?";
-	private final String SELECT_CATEGORY_QUERY = "SELECT * FROM " + nameDB + " WHERE category = ?";
+	private final String INSERT_QUERY = "INSERT INTO news (title, category, content) VALUES (?, ?, ?)";
+	private final String SELECT_TITLE_QUERY = "SELECT * FROM news WHERE title = ?";
+	private final String SELECT_CATEGORY_QUERY = "SELECT * FROM news WHERE category = ?";
 
 	@Override
 	public void init() throws DAOException {
@@ -34,13 +32,9 @@ public class SqlNewsDAO implements NewsDAO {
 
 	@Override
 	public void addNews(Request request) throws DAOException {
-		if (request == null || request.getTitle() == null || request.getCategory() == null
-				|| request.getContent() == null) {
-			throw new DAOException("Incorrect news initialization");
-		}
-
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
+		
 		try {
 			connection = pool.takeConnection();
 			preparedStatement = connection.prepareStatement(INSERT_QUERY);
@@ -72,10 +66,6 @@ public class SqlNewsDAO implements NewsDAO {
 
 	@Override
 	public HashSet<News> findByTitle(Request request) throws DAOException {
-		if (request == null || request.getTitle() == null) {
-			throw new DAOException("Incorrect title initialization");
-		}
-
 		HashSet<News> result = new HashSet<>();
 		
 		PreparedStatement preparedStatement = null;
@@ -129,10 +119,6 @@ public class SqlNewsDAO implements NewsDAO {
 
 	@Override
 	public HashSet<News> findByCategory(Request request) throws DAOException {
-		if (request == null || request.getCategory() == null) {
-			throw new DAOException("Incorrect category initialization");
-		}
-
 		HashSet<News> result = new HashSet<>();
 		
 		PreparedStatement preparedStatement = null;

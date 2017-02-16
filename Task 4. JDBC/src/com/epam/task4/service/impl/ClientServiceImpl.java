@@ -6,6 +6,7 @@ import com.epam.task4.dao.exception.DAOException;
 import com.epam.task4.dao.factory.DAOFactory;
 import com.epam.task4.service.ClientService;
 import com.epam.task4.service.exception.ServiceException;
+import com.epam.task4.service.util.Validator;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -22,7 +23,7 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public void registration(Request request) throws ServiceException {
-		if (request == null || request.getLogin() == null || request.getPassword() == null) {
+		if(!Validator.validateUser(request)){
 			throw new ServiceException("Incorrect request initialization");
 		}
 
@@ -37,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public boolean signIn(Request request) throws ServiceException {
-		if (request == null || request.getLogin() == null || request.getPassword() == null) {
+		if(!Validator.validateUser(request)){
 			throw new ServiceException("Incorrect request initialization");
 		}
 
@@ -49,12 +50,13 @@ public class ClientServiceImpl implements ClientService {
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
+		
 		return result;
 	}
 
 	@Override
 	public boolean signOut(Request request) throws ServiceException {
-		if (request == null) {
+		if(!Validator.validateLogin(request)){
 			throw new ServiceException("Incorrect request initialization");
 		}
 
@@ -66,6 +68,7 @@ public class ClientServiceImpl implements ClientService {
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
+		
 		return result;
 	}
 

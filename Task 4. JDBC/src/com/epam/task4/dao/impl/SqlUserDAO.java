@@ -14,11 +14,9 @@ import com.epam.task4.dao.exception.DAOException;
 public class SqlUserDAO implements UserDAO {
 	private ConnectionPool pool = ConnectionPool.getInstance();
 
-	private final String nameDB = "user";
-
-	private final String INSERT_LOGIN_PASSWORD = "INSERT INTO " + nameDB + " (login, password) VALUES (?, ?)";
-	private final String SELECT_LOGIN_PASSWORD = "SELECT * FROM " + nameDB + " WHERE login = ? AND password = ?";
-	private final String DELETE_LOGIN = "DELETE FROM " + nameDB + " WHERE login = ?";
+	private final String INSERT_LOGIN_PASSWORD = "INSERT INTO user (login, password) VALUES (?, ?)";
+	private final String SELECT_LOGIN_PASSWORD = "SELECT * FROM user WHERE login = ? AND password = ?";
+	private final String DELETE_LOGIN = "DELETE FROM user WHERE login = ?";
 
 	@Override
 	public void init() throws DAOException {
@@ -31,12 +29,9 @@ public class SqlUserDAO implements UserDAO {
 
 	@Override
 	public void registration(Request request) throws DAOException {
-		if (request == null || request.getLogin() == null || request.getPassword() == null) {
-			throw new DAOException("Incorrect user initialization");
-		}
-
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
+		
 		try {
 			connection = pool.takeConnection();
 			preparedStatement = connection.prepareStatement(INSERT_LOGIN_PASSWORD);
@@ -68,9 +63,7 @@ public class SqlUserDAO implements UserDAO {
 	@Override
 	public boolean signIn(Request request) throws DAOException {
 		boolean result = false;
-		if (request == null || request.getLogin() == null || request.getPassword() == null) {
-			throw new DAOException("Incorrect user initialization");
-		}
+		
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 		ResultSet resultSet = null;
@@ -122,9 +115,6 @@ public class SqlUserDAO implements UserDAO {
 	@Override
 	public boolean signOut(Request request) throws DAOException {
 		boolean result = false;
-		if (request == null || request.getLogin() == null) {
-			throw new DAOException("Incorrect login initialization");
-		}
 
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;

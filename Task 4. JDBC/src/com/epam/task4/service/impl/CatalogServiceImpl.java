@@ -9,6 +9,7 @@ import com.epam.task4.dao.exception.DAOException;
 import com.epam.task4.dao.factory.DAOFactory;
 import com.epam.task4.service.CatalogService;
 import com.epam.task4.service.exception.ServiceException;
+import com.epam.task4.service.util.Validator;
 
 public class CatalogServiceImpl implements CatalogService {
 
@@ -25,7 +26,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 	@Override
 	public void addNews(Request request) throws ServiceException {
-		if (request == null || request.getTitle() == null || request.getCategory() == null || request.getContent() == null) {
+		if(!Validator.validateNews(request)){
 			throw new ServiceException("Incorrect request initialization");
 		}
 
@@ -40,7 +41,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 	@Override
 	public HashSet<News> findByTitle(Request request) throws ServiceException {
-		if (request == null) {
+		if(!Validator.validateTitle(request)){
 			throw new ServiceException("Incorrect request initialization");
 		}
 		
@@ -52,14 +53,16 @@ public class CatalogServiceImpl implements CatalogService {
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
+		
 		return result;
 	}
 
 	@Override
 	public HashSet<News> findByCategory(Request request) throws ServiceException {
-		if (request == null) {
+		if(!Validator.validateCategory(request)){
 			throw new ServiceException("Incorrect request initialization");
 		}
+		
 		HashSet<News> result = new HashSet<>();
 		try {
 			DAOFactory daoObjectFactory = DAOFactory.getInstance();
@@ -68,6 +71,7 @@ public class CatalogServiceImpl implements CatalogService {
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
+		
 		return result;
 	}
 
